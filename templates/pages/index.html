@@ -1,3 +1,75 @@
 {% extends 'base.html' %}{% load bootstrap5 %}
+{% load humanize %}
 {% block title %} | Home {% endblock title %}
-{% block content %}Hello{% endblock content %}
+{% block content %}
+    <!-- Hero -->
+    <main class="index-hero mb-5 ">
+        <div class="cover">
+            <h1> Your dream place is one click away</h1>
+            <p class="fw-bold">Customer satisfaction is our goal</p>
+            <button type="button" class="btn background-orange text-white">View Listing</button>
+            <h3 class="my-3 underline">Find your home</h3>
+            <form class="flex-wrap gap-2 gap-sm-3" method="post">
+                {% bootstrap_form form layout='inline' %}
+                <button type="submit" class="btn background-orange text-white">Submit</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Services -->
+    <section class="container d-flex flex-column align-items-center my-5 gap-4">
+        <h1 class="underline fw-bold">Our Main Services</h1>
+        <div class="row text-center px-2">
+            <div class="col-sm-4">
+                <i class="fa fa-home display-2 color-orange"></i>
+                <h3>Property Management</h3>
+                <p class="color-gray">Lorem ipsum dolor sit amet, consectetur adipi
+                    scing elit, sed do eiusmod tempor</p>
+            </div>
+            <div class="col-sm-4">
+                <i class="fa fa-hand-holding-usd display-2 color-orange"></i>
+                <h3>Buying And Selling</h3>
+                <p class="color-gray">incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud</p>
+            </div>
+            <div class="col-sm-4">
+                <i class="fa fa-comment display-2 color-orange"></i>
+                <h3>Consulting Service</h3>
+                <p class="color-gray">incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listing -->
+    <section class="d-flex flex-column w-100 text-center container-md mb-5">
+        <h1 class="underline align-self-center mb-5 fw-bold">Latest Listing</h1>
+        <div class=" all-cards container">
+            {% for listing in listings %}
+                <div class="listing-card px-0 mb-3 ma ">
+                    <img src="{{ listing.photo_main.url }}" alt="listing image">
+                    <div class="gap-1">
+                        <p class="address text-truncate"><i class="fa fa-map-marker-alt"> </i> {{ listing.address}},
+                            {{ listing.city}}, {{ listing.state }}</p>
+                        <h4 class="text-truncate">{{ listing.title }}</h4>
+                        <p class="price">${{ listing.price|intcomma }}</p>
+                        <hr>
+                        <div class="color-gray gap-2">
+                            <p class="mx-1"><i class="fa fa-bed"></i> {{ listing.bedrooms }} Bedrooms</p>
+                            <p class="mx-1"><i class="fa fa-bath"></i> {{ listing.baths }} Baths</p>
+                            <p class="mx-1"><i class="fa fa-car-alt"></i> {{ listing.garage }} Garage</p>
+                            <p class="mx-1"><i class="fa fa-expand"></i> {{ listing.sqft }} sq.ft</p>
+                            <p class="mx-1"><i class="fa fa-swimming-pool"></i> {{ listing.pool }} Pool</p>
+                        </div>
+                        <button class="btn link-button">More Info</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="d-flex justify-content-center w-100 mb-5">
+        <a href="#" class="btn link-button px-5 py-2"> View All Listings</a>
+    </div>
+
+{% endblock content %}

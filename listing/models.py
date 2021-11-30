@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
-from .choices import offer
+from .choices import offer_choices
 from random import randint
 
 user = get_user_model()
@@ -30,7 +30,7 @@ class Listing(models.Model):
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
-    offer_type = models.CharField(max_length=100, choices=offer)
+    offer_type = models.CharField(max_length=100, choices=offer_choices)
     zipcode = models.CharField(max_length=20)
     price = models.IntegerField()
     bedrooms = models.IntegerField()
