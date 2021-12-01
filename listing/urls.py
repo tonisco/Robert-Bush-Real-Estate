@@ -1,3 +1,4 @@
 from django.urls import path
+from .views import all_listings
 
-urlpatterns = []
+urlpatterns = [path('', all_listings, name='all_listings')]
