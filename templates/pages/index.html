@@ -44,32 +44,34 @@
 
     <!-- Listing -->
     <section class="d-flex flex-column w-100 text-center container-md mb-5">
-        {% if listings %} {% for listing in listings %}
+        {% if listings %}
             <h1 class="underline align-self-center mb-5 fw-bold">Latest Listing</h1>
             <div class="all-cards container">
-
-                <div class="listing-card px-0 mb-3 ma">
-                    <img src="{{ listing.photo_main.url }}" alt="listing image"/>
-                    <div class="gap-1">
-                        <p class="address text-truncate">
-                            <i class="fa fa-map-marker-alt"> </i> {{ listing.address }}, {{ listing.city }},
-                            {{ listing.state }}
-                        </p>
-                        <h4 class="text-truncate">{{ listing.title }}</h4>
-                        <p class="price">${{ listing.price|intcomma }}</p>
-                        <hr/>
-                        <div class="color-gray gap-2">
-                            <p class="mx-1"><i class="fa fa-bed"></i> {{ listing.bedrooms }} Bedrooms</p>
-                            <p class="mx-1"><i class="fa fa-bath"></i> {{ listing.baths }} Baths</p>
-                            <p class="mx-1"><i class="fa fa-car-alt"></i> {{ listing.garage }} Garage</p>
-                            <p class="mx-1"><i class="fa fa-expand"></i> {{ listing.sqft }} sq.ft</p>
-                            <p class="mx-1"><i class="fa fa-swimming-pool"></i> {{ listing.pool }} Pool</p>
+                {% for listing in listings %}
+                    <div class="listing-card px-0 mb-3 ma">
+                        <img src="{{ listing.photo_main.url }}" alt="listing image"/>
+                        <div class="gap-1">
+                            <p class="address text-truncate">
+                                <i class="fa fa-map-marker-alt"> </i> {{ listing.address }}, {{ listing.city }},
+                                {{ listing.state }}
+                            </p>
+                            <h4 class="text-truncate">{{ listing.title }}</h4>
+                            <p class="price">${{ listing.price|intcomma }}</p>
+                            <hr/>
+                            <div class="color-gray gap-2">
+                                <p class="mx-1"><i class="fa fa-bed"></i> {{ listing.bedrooms }} Bedrooms</p>
+                                <p class="mx-1"><i class="fa fa-bath"></i> {{ listing.baths }} Baths</p>
+                                <p class="mx-1"><i class="fa fa-car-alt"></i> {{ listing.garage }} Garage</p>
+                                <p class="mx-1"><i class="fa fa-expand"></i> {{ listing.sqft }} sq.ft</p>
+                                <p class="mx-1"><i class="fa fa-swimming-pool"></i> {{ listing.pool }} Pool</p>
+                            </div>
+                            <button class="btn link-button">More Info</button>
                         </div>
-                        <button class="btn link-button">More Info</button>
+                    <p class="offer">For {{ listing.offer_type }}</p>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %} {% else %}
+        {% else %}
             <h1>There are no listings</h1>
         {% endif %}
     </section>

@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-light navbar-expand-md bg-white fixed-top px-3 border-bottom">
+<nav class="navbar navbar-light navbar-expand-md bg-white fixed-top px-3 border-bottom shadow-sm">
     <div class="container-lg flex align-items-end">
         <a class="navbar-brand mr-5" href="{% url 'index' %}">
             <img src="{% static 'images/navbar_logo.svg' %}" alt="navbar_logo" class="nav-logo ">
@@ -31,7 +31,7 @@
                             <a class="nav-link color-gray" href="#">AGENTS</a>
                         </li>
                         <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="#">ABOUT</a>
+                            <a class="nav-link color-gray" href="{% url 'about' %}">ABOUT</a>
                         </li>
 
                     </ul>

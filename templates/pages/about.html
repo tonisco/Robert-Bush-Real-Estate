@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| About{% endblock title %}
+{% block content %}
+    <!-- HERO -->
+    <section class="about-hero py-4 px-2">
+        <h1>About Robert Bush Real Estate</h1>
+        <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
+    </section>
+
+    <!-- breadcrumbs -->
+
+    <nav class="container my-4">
+        <ol class="breadcrumb bg-dark bg-opacity-25 py-1 px-2">
+            <li class="breadcrumb-item color-orange"><a class="color-orange text-decoration-none"
+                                                        href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About</li>
+        </ol>
+    </nav>
+
+    <main class="container my-5">
+        <h1 class="text-capitalize">We are the link to your perfect house</h1>
+        <p class="small color-gray about-width">Esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident </p>
+        <img class="about-image about-width" src="{% static 'images/about-image1.jpg' %}" alt="house-sample">
+        <p class="small color-gray about-width">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.</p>
+    </main>
+
+    <section class="container my-5 ">
+        <div class="about-width mx-0">
+            <h3>Frequently Asked Questions</h3>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button text-white background-orange border-0" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne">
+                            Lorem ipsum dolor sit amet, consectetur adipiscin
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            Elit, sed do eiusmod tempor incididunt ut labore et quis nostrud exercitation ullamco
+                            laboris
+                            nisi ut aliquip ex ea
+                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                            dolore
+                            eu fugiat nulla
+                            pariatur. Excepteur sint occaecat cupidatat non proident
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed text-white background-orange border-0" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo">
+                            Aliquam pellentesque ligula eget elit molestie placerat.
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            Proin ultricies, metus vel dignissim luctus, odio nulla congue tortor, at molestie nisi
+                            risus ut
+                            felis. Maecenas finibus elit non metus ullamcorper vestibulum. Donec auctor rhoncus elit
+                            dictum
+                            vehicula. Morbi cursus sit amet nulla sit amet suscipit. Sed vel pulvinar felis, ut congue
+                            metus
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed text-white background-orange border-0" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree">
+                            Integer suscipit magna at turpis consequat, non imperdiet
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            Sed tincidunt, metus sit amet mattis congue, urna augue tempus felis, eget consequat massa
+                            massa
+                            in turpis. Nullam non velit magna. Vivamus et quam a nisl iaculis tincidunt. Proin
+                            imperdiet,
+                            sem vitae bibendum tempus, tellus felis pellentesque erat, et ultricies felis ipsum eget mi
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="container my-5 ">
+        <main class="width-max mx-0">
+            <h1>Contact Us</h1>
+            <div class="my-3">
+                <div class="d-flex gap-3">
+                    <h6><i class="fa fa-address-book"></i> Address:</h6>
+                    <div class="d-flex flex-column gap-1">
+                        <p class="small color-gray m-0">454 Lorem Street</p>
+                        <p class="small color-gray">Jundle city</p>
+                        <p class="small color-gray">Za, Name country</p>
+                        <p class="small color-gray">234355</p></div>
+                </div>
+                <div class="d-flex gap-3">
+                    <h6><i class="fa fa-phone-alt"></i> Telephone:</h6>
+                    <p class="small color-gray">2335 2322</p>
+                </div>
+                <div class="d-flex gap-3">
+                    <h6><i class="fa fa-envelope"></i> Email:</h6>
+                    <p class="small color-gray">customerservice@robertbushrestate</p>
+                </div>
+            </div>
+
+            <h3>Or</h3>
+
+            <form class="mt-4">
+                <div class="mb-3">
+                    <label for="about-name" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="about-name" placeholder="Name">
+                </div>
+                <div class="mb-3">
+                    <label for="about-email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="about-email" placeholder="Email">
+                </div>
+                <div class="mb-3">
+                    <label for="textarea" class="form-label">Message</label>
+                    <textarea class="form-control" id="textarea" rows="3" placeholder="Message"></textarea>
+                </div>
+                <button type="submit" class="btn background-orange text-white">Send <img
+                        src="{% static 'images/send.svg' %}" alt="" class="send-icon"></button>
+            </form>
+        </main>
+    </section>
+
+
+
+{% endblock content %}
