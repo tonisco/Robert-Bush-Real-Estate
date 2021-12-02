@@ -16,7 +16,7 @@
     transition: all .3s ease-out;
 }
 
-.border-orange{
+.border-orange {
     border-color: var(--orange-color) !important;
 }
 
@@ -178,7 +178,7 @@
     }
 }
 
-.listing-card {
+.listing-card, .agent-card {
     max-width: 320px;
     min-width: 200px;
     height: 470px;
@@ -257,7 +257,7 @@
     border-radius: 10px;
 }
 
-.about-hero {
+.hero {
     background-image: linear-gradient(rgba(245, 156, 70, .7), rgba(245, 156, 70, .7)), url("../images/about.jpg");
     background-repeat: no-repeat;
     background-position: center;
@@ -287,7 +287,7 @@
     max-width: 500px !important;
 }
 
-.send-icon{
+.send-icon {
     height: 20px;
     width: 20px;
 }
@@ -301,5 +301,11 @@
 .hero-form form > * {
     min-width: 200px;
     max-width: 300px;
+}
+
+.agent-card {
+    height: auto;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }
 

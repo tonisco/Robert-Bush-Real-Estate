@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 # Create your views here.
 def all_listings(request):
     listings = Listing.objects.filter(is_published=True).order_by('-list_date')
-    paginator = Paginator(listings, 1)
+    paginator = Paginator(listings, 9)
     page_num = request.GET.get('page')
     page_obj = paginator.get_page(page_num)
 

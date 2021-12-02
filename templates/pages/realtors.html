@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Agents{% endblock title %}
+{% block content %}
+    <section class="hero py-4 px-2">
+        <h1>Our Agents</h1>
+        <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
+    </section>
+
+    <nav class="container my-4">
+        <ol class="breadcrumb bg-dark bg-opacity-25 py-1 px-2">
+            <li class="breadcrumb-item color-orange">
+                <a class="color-orange" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active color-orange">Agents</li>
+        </ol>
+    </nav>
+
+    <section class="d-flex flex-column w-100 text-center container-md mb-5 gap-3">
+        {% if page_obj %}
+            <div class="all-cards container">
+                {% for agent in page_obj %}
+                    <div class="bg-dark bg-opacity-10 agent-card">
+                        <img src="{{ agent.photo.url }}" alt="realtor image">
+                        <div class="p-2">
+                            <h4 class="text-capitalize text-truncate">{{ agent.first_name }} {{ agent.last_name }}</h4>
+                            <p class="color-gray">Realtor</p>
+                            <a class="btn link-button py-1 px-3">More Info</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2 class="color-gray align-self-start">There are no agents</h2>
+        {% endif %}
+    </section>
+
+    {% if page_obj.has_other_pages %}
+        <nav class="d-flex justify-content-center w-100 mb-4 mt-2">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link link-button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link border-orange">Previous</a></li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                    {% if page_obj.number  == page %}
+                        <li class="page-item disabled"><a class="page-link border-orange">{{ page }}</a></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link link-button" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link link-button" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link border-orange">Next</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock content %}
