@@ -43,3 +43,31 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'password', 'phone', 'about_me', 'photo', 'hire_date', 'is_admin')
+
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+
+class SignUpForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email',)
+
+
+class SignUpAdminForm(forms.ModelForm):
+    def __init__(self):
+        super().__init__()
+        self.fields['photo'].required = True
+        self.fields['phone'].required = True
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'photo', 'phone', 'about_me')

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block title %}| User login{% endblock title %}
+{% block content %}
+    {% if request.path == '/user/register/' %}
+        <main class="signup">
+    {% else %}
+        <main class="signup_admin">
+    {% endif %}
+
+<figure>
+    <img src="{% static 'images/signup.jpg' %}" alt="login image">
+</figure>
+<div>
+    {% if request.path == '/user/register/' %}
+        <h1>Sign Up</h1>
+    {% elif request.path == '/user/register/admin/' %}
+        <h1>Agent Sign Up</h1>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn link-button mb-3">Sign up</button>
+        {% if request.path == '/user/register/' %}
+            <p>Sign up as an <a class="color-orange" href="{% url 'register_admin' %}">Agent</a></p>
+        {% elif request.path == '/user/register/admin/' %}
+            <p>Sign up as a <a class="color-orange" href="{% url 'register' %}">User</a></p>
+
+        {% endif %}
+        <p>Already have an account? <a class="color-orange" href="{% url 'login' %}">Login</a></p>
+    </form>
+</div>
+</main>
+{% endblock content %}

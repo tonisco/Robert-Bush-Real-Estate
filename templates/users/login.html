@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block title %}| User login{% endblock title %}
+{% block content %}
+    <main class="login">
+        <figure>
+            <img src="{% static 'images/login.jpg' %}" alt="login image">
+        </figure>
+        <div>
+            <h1>Login</h1>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <button type="submit" class="btn link-button mb-3">Login</button>
+                <p>New User? <a class="color-orange" href="{% url 'register' %}">Sign Up</a></p>
+            </form>
+        </div>
+    </main>
+{% endblock content %}
