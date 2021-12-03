@@ -309,3 +309,108 @@
     margin-bottom: 20px;
 }
 
+.listing-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    justify-content: space-between;
+    grid-gap: 1fr;
+    margin-bottom: 25px;
+}
+
+@media screen and (max-width: 992px) {
+    .listing-details {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+
+    }
+}
+
+.listing-overview {
+    width: 600px;
+}
+
+.listing-overview > figure {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.listing-overview > figure > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.listing-other-photo {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 18%);
+    grid-gap: 1fr;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.listing-other-photo > img {
+    width: 100%;
+    height: 108px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .listing-overview {
+        width: 100%;
+    }
+
+    .listing-overview > figure {
+        height: 50vw;
+    }
+
+    .listing-other-photo > img {
+        height: 15vw;
+    }
+}
+
+.listing-property {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.listing-property > div {
+    display: flex;
+    color: var(--gray-color);
+    gap: 0.5rem
+}
+
+.listing-realtor {
+    width: 300px;
+    height: 520px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    border-radius: 10px;
+}
+
+.listing-realtor > img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 992px) {
+    .listing-realtor {
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .listing-realtor {
+        justify-self: center;
+        width: 70%;
+        height: auto;
+    }
+.listing-realtor > img {
+    height: 250px;
+}
+}

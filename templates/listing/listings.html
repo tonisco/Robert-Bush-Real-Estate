@@ -45,7 +45,7 @@
                                 <p class="mx-1"><i class="fa fa-expand"></i> {{ listing.sqft }} sq.ft</p>
                                 <p class="mx-1"><i class="fa fa-swimming-pool"></i> {{ listing.pool }} Pool</p>
                             </div>
-                            <button class="btn link-button">More Info</button>
+                            <a href="{% url 'listing' listing.id %}" class="btn link-button">More Info</a>
                         </div>
                         <p class="offer">For {{ listing.offer_type }}</p>
                     </div>
