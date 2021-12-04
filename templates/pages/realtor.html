@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}| {{ agent.last_name }} {{ agent.first_name }}{% endblock title %}
+{% block content %}
+    <nav class="container mb-4 mt-3">
+        <ol class="breadcrumb bg-dark bg-opacity-25 py-1 px-2">
+            <li class="breadcrumb-item color-orange">
+                <a class="color-orange" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item color-orange">
+                <a class="color-orange" href="{% url 'agents' %}">Agents</a>
+            </li>
+            <li class="breadcrumb-item active color-orange">{{ agent.last_name }} {{ agent.first_name }}</li>
+        </ol>
+    </nav>
+
+    <main class="container agent gap-4 mb-5">
+        <figure>
+            <img src="{{ agent.photo.url }}" alt="agent image">
+        </figure>
+        <div class="gap-1">
+            <h2>{{ agent.last_name }} {{ agent.first_name }}</h2>
+            <p><i class="fa fa-envelope"></i> Email: {{ agent.email }}</p>
+            <p><i class="fa fa-phone-alt"></i> Phone: {{ agent.phone }}</p>
+            {% if agent.about_me %}
+                <h3>About Me</h3>
+                <p class="small">{{ agent.about_me }}</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <section class="d-flex flex-column w-100 text-center container-md mb-5 gap-4 mt-2">
+        {% if page_obj %}
+            <h2>Listings by {{ agent.last_name }} {{ agent.first_name }}</h2>
+            <div class="all-cards container">
+                {% for listing in page_obj %}
+                    <div class="listing-card px-0 mb-3 ma">
+                        <img src="{{ listing.photo_main.url }}" alt="listing image"/>
+                        <div class="gap-1">
+                            <p class="address text-truncate">
+                                <i class="fa fa-map-marker-alt"> </i> {{ listing.address }}, {{ listing.city }},
+                                {{ listing.state }}
+                            </p>
+                            <h4 class="text-truncate">{{ listing.title }}</h4>
+                            <p class="price">${{ listing.price|intcomma }}</p>
+                            <hr/>
+                            <div class="color-gray gap-2">
+                                <p class="mx-1"><i class="fa fa-bed"></i> {{ listing.bedrooms }} Bedrooms</p>
+                                <p class="mx-1"><i class="fa fa-bath"></i> {{ listing.baths }} Baths</p>
+                                <p class="mx-1"><i class="fa fa-car-alt"></i> {{ listing.garage }} Garage</p>
+                                <p class="mx-1"><i class="fa fa-expand"></i> {{ listing.sqft }} sq.ft</p>
+                                <p class="mx-1"><i class="fa fa-swimming-pool"></i> {{ listing.pool }} Pool</p>
+                            </div>
+                            <a href="{% url 'listing' listing.id %}" class="btn link-button">More Info</a>
+                        </div>
+                        <p class="offer">For {{ listing.offer_type }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2 class="color-gray align-self-start">There are no listings</h2>
+        {% endif %}
+    </section>
+
+    {% if page_obj.has_other_pages %}
+        <nav class="d-flex justify-content-center w-100 mb-4 mt-2">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link link-button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link border-orange">Previous</a></li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                    {% if page_obj.number  == page %}
+                        <li class="page-item disabled"><a class="page-link border-orange">{{ page }}</a></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link link-button" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link link-button" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link border-orange">Next</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -25,7 +25,7 @@
                         <div class="p-2">
                             <h4 class="text-capitalize text-truncate">{{ agent.first_name }} {{ agent.last_name }}</h4>
                             <p class="color-gray">Realtor</p>
-                            <a class="btn link-button py-1 px-3">More Info</a>
+                            <a href="{% url 'agent' agent.id %}" class="btn link-button py-1 px-3">More Info</a>
                         </div>
                     </div>
                 {% endfor %}

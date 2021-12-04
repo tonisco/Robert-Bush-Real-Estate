@@ -2,7 +2,7 @@ from django.shortcuts import render
 from listing.form import SearchForm
 from listing.models import Listing
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 
 # from user.models import User
@@ -26,6 +26,27 @@ def agents(request):
     user = User.objects.filter(~Q(email='t@m.com')).order_by('-hire_date')
     paginator = Paginator(user, 9)
     page_num = request.GET.get('page')
-    page_obj = paginator.get_page(page_num)
+    try:
+        page_obj = paginator.get_page(page_num)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     context = {'page_obj': page_obj}
     return render(request, 'pages/realtors.html', context=context)
+
+
+def agent(request, agent_id):
+    agent = User.objects.get(id=agent_id)
+    agent_listing = Listing.objects.filter(realtor_id=agent_id).order_by('-list_date')
+    paginator = Paginator(agent_listing, 6)
+    page_num = request.GET.get('page')
+    print(agent)
+    try:
+        page_obj = paginator.get_page(page_num)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    context = {'agent': agent, 'page_obj': page_obj}
+    return render(request, 'pages/realtor.html', context)

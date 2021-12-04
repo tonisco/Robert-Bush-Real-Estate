@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Listing
 from .form import SearchForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from contact.form import ContactForm
 
 
@@ -10,7 +10,12 @@ def all_listings(request):
     listings = Listing.objects.filter(is_published=True).order_by('-list_date')
     paginator = Paginator(listings, 9)
     page_num = request.GET.get('page')
-    page_obj = paginator.get_page(page_num)
+    try:
+        page_obj = paginator.get_page(page_num)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
 
     form = SearchForm(listing=listings)
     context = {'page_obj': page_obj, 'form': form}
