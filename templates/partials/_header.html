@@ -36,17 +36,47 @@
 
                     </ul>
                 </div>
-                <div class="offcanvas-body padding-top-nav">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
-                        <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="{% url 'login' %}"><i class="fa fa-sign-in-alt"></i> LOGIN </a>
-                        </li>
-                        <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="{% url 'register' %}"><i class="fa fa-user-alt"></i> REGISTER</a>
-                        </li>
+                {% if user.is_authenticated %}
+                    <div class="offcanvas-body padding-top-nav">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
+                            <li class="dropdown nav-item fw-bold">
+                                <a class="dropdown-toggle nav-link color-gray text-uppercase text-truncate"
+                                   type="button" id="dropdownMenuButton1"
+                                   data-bs-toggle="dropdown">
+                                    Hi, {{ user.last_name }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                                    {% if user.is_admin %}
+                                        <li><a class="dropdown-item" href="{% url 'agent_listing' %}">My Listings</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
 
-                    </ul>
-                </div>
+                            <li class="nav-item fw-bold">
+                                <a class="nav-link color-gray" href="{% url 'logout' %}"><i
+                                        class="fa fa-sign-out-alt"></i> SIGNOUT</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="offcanvas-body padding-top-nav">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
+                            <li class="nav-item fw-bold">
+                                <a class="nav-link color-gray" href="{% url 'login' %}"><i
+                                        class="fa fa-sign-in-alt"></i> LOGIN </a>
+                            </li>
+                            <li class="nav-item fw-bold">
+                                <a class="nav-link color-gray" href="{% url 'register' %}"><i
+                                        class="fa fa-user-alt"></i> REGISTER</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
 
         </div>

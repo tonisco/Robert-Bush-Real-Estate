@@ -16,10 +16,11 @@ def contact(request):
         phone = request.POST['phone']
         message = request.POST['message']
         user_id = request.POST['user_id']
+        realtor = request.POST['realtor']
 
         details = Listing.objects.filter(id=listing_id)
 
-        new_contact = Contact(listing_id=listing_id, name=name, listing=listing,
+        new_contact = Contact(listing_id=listing_id, name=name, listing=listing, realtor=realtor,
                               email=email, phone=phone, message=message, user_id=user_id)
         new_contact.save()
         messages.success(request=request,

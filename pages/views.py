@@ -23,7 +23,7 @@ def about(request):
 
 
 def agents(request):
-    user = User.objects.filter(~Q(email='t@m.com')).order_by('-hire_date')
+    user = User.objects.filter(~Q(email='t@m.com'),is_staff=True).order_by('-hire_date')
     paginator = Paginator(user, 9)
     page_num = request.GET.get('page')
     try:

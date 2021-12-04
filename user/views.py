@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
+import os
 from django.contrib.auth import get_user_model
-from .form import LoginForm, SignUpForm, SignUpAdminForm
+from .form import LoginForm, SignUpForm, SignUpAdminForm, UserEditForm
+from .models import User as UserModel
 from django.contrib import messages, auth
+from contact.models import Contact
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from listing.models import Listing
+from listing.form import ListingForm
 
 User = get_user_model()
 
@@ -91,4 +97,70 @@ def logout(request):
 
 
 def dashboard(request):
-    return render(request, 'pages/index.html')
+    user = auth.get_user(request)
+    if user.is_authenticated:
+        if user.is_superuser:
+            listings = Contact.objects.filter(realtor=user.email).order_by('-contact_date')
+        else:
+            listings = Contact.objects.filter(user_id=user.id).order_by('-contact_date')
+        context = {'listings': listings}
+        return render(request, 'users/dashboard.html', context)
+    else:
+        return redirect('index')
+
+
+def settings(request):
+    user = auth.get_user(request)
+    if user.is_superuser and user.is_authenticated:
+        if request.method == 'POST':
+            email = request.POST['email']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            phone = request.POST['phone']
+            about_me = request.POST['about_me']
+            if 'photo' in request.FILES:
+                photo = request.FILES['photo']
+                print(user.photo)
+                os.remove(user.photo)
+                user = user(id=user.id, email=email, first_name=first_name, last_name=last_name, phone=phone,
+                            about_me=about_me, photo=photo)
+            else:
+                user = user(id=user.id, email=email, first_name=first_name, last_name=last_name, phone=phone,
+                            about_me=about_me)
+            user.save()
+        form = UserEditForm(user=user)
+        context = {'form': form}
+        return render(request, 'users/settings.html', context)
+    else:
+        return redirect('index')
+
+
+def agent_listing(request):
+    user = auth.get_user(request)
+    if user.is_superuser and user.is_authenticated:
+        listings = Listing.objects.filter(realtor_id=user.id).order_by('-list_date')
+        context = {}
+        if listings.count() > 0:
+            paginator = Paginator(listings, 9)
+            page = request.GET.get('page')
+            try:
+                page_obj = paginator.get_page(page)
+            except PageNotAnInteger:
+                page_obj = paginator.get_page(1)
+            except EmptyPage:
+                page_obj = paginator.get_page(paginator.num_pages)
+            context = {'page_obj': page_obj}
+
+        return render(request, 'users/agent_listing.html', context)
+    else:
+        return redirect('index')
+
+
+def listing_edit(request):
+    user = auth.get_user(request)
+    if user.is_superuser and user.is_authenticated:
+        form = ListingForm(request=request)
+        context = {'form': form}
+        return render(request, 'users/listing_edit.html', context)
+    else:
+        return redirect('index')

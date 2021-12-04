@@ -493,3 +493,15 @@
     max-width: max-content;
 }
 
+.height{
+    min-height: 43.5vh;
+}
+
+.forms{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 70vw;
+    margin: 20px auto;
+}
+

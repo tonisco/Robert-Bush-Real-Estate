@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}| user dashboard{% endblock title %}
+{% block content %}
+
+    <section class="hero py-4 px-2">
+        <h1>Dashboard</h1>
+        <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
+    </section>
+
+    <nav class="container mb-4 mt-3">
+        <ol class="breadcrumb bg-dark bg-opacity-25 py-1 px-2">
+            <li class="breadcrumb-item color-orange">
+                <a class="color-orange" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active color-orange">Dashboard</li>
+        </ol>
+    </nav>
+
+    <main class="container height">
+
+        {% if listings %}
+            {% if user.is_admin %}<h1>Inquiries On Listings</h1>{% else %}<h1> My Inquiries</h1>{% endif %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Listing</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact Date</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for listing in listings %}
+                    <tr>
+                        <th scope="row">{{ listing.id }}</th>
+                        <td>{{ listing.listing }}</td>
+                        <td>{{ listing.email }}</td>
+                        <td>{{ listing.contact_date }}</td>
+                        <td>
+                            <a class="btn link-button" href="{% url 'listing' listing.listing_id %}">View Listing</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}<h5> Pls make an inquiry on a listing</h5>
+        {% endif %}
+    </main>
+{% endblock content %}

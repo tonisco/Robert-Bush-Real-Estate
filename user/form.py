@@ -46,6 +46,8 @@ class UserChangeForm(forms.ModelForm):
 
 
 class LoginForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, label='Password')
+
     class Meta:
         model = User
         fields = ('email', 'password')
@@ -65,9 +67,26 @@ class SignUpAdminForm(forms.ModelForm):
         super().__init__()
         self.fields['photo'].required = True
         self.fields['phone'].required = True
+
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'photo', 'phone', 'about_me')
+
+
+class UserEditForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['email'].initial = self.user.email
+        self.fields['first_name'].initial = self.user.first_name
+        self.fields['last_name'].initial = self.user.last_name
+        self.fields['phone'].initial = self.user.phone
+        self.fields['about_me'].initial = self.user.about_me
+        self.fields['photo'].initial = self.user.photo
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'phone', 'about_me', 'photo')

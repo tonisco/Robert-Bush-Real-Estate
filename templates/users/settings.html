@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+    <main class=" container my-5">
+        <form class="forms" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Edit Details</h1>
+            {% bootstrap_form form layout='inline' %}
+            <button type="submit" class="btn link-button align-self-end mt-3">Save Changes</button>
+        </form>
+    </main>
+{% endblock %}

@@ -23,11 +23,12 @@ class SearchForm(forms.ModelForm):
         self.listings = kwargs.pop('listing')
         self.states = [('', 'State')]
         super(SearchForm, self).__init__(*args, **kwargs)
-        for item in self.listings:
-            if item.state not in self.states:
-                self.states.append((item.state, item.state))
-        self.states = tuple(sorted(self.states, key=lambda x: x[0]))
-        self.fields['state'].widget.choices = self.states
+        if self.listings:
+            for item in self.listings:
+                if item.state not in self.states:
+                    self.states.append((item.state, item.state))
+            self.states = tuple(sorted(self.states, key=lambda x: x[0]))
+            self.fields['state'].widget.choices = self.states
 
     offer_type = forms.ChoiceField(choices=offer_choices, required=False)
     bedrooms = forms.ChoiceField(choices=bedroom_choices, required=False)
