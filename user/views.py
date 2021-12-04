@@ -31,13 +31,13 @@ def check_user(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     if password != confirm_password:
-        messages.error(request, 'passwords do not match')
-        return redirect('register')
+        user = 'Passwords do not match'
+        return user
 
     user_exist = User.objects.filter(email=email)
     if user_exist:
-        messages.error(request, 'email has already been used')
-        return redirect('register')
+        user = 'Email has already been used'
+        return user
 
     user = User(email=email, first_name=first_name, last_name=last_name)
     user.set_password(password)
@@ -47,9 +47,13 @@ def check_user(request):
 def register(request):
     if request.method == 'POST':
         user = check_user(request)
-        user.save()
-        messages.success(request, 'You have signed up successfully, pls login')
-        return redirect('login')
+        if isinstance(user, User):
+            user.save()
+            messages.success(request, 'You have signed up successfully, pls login')
+            return redirect('login')
+        else:
+            messages.error(request, user)
+            return redirect('register')
 
     form = SignUpForm()
     context = {'form': form}
@@ -59,19 +63,22 @@ def register(request):
 def register_admin(request):
     if request.method == 'POST':
         user = check_user(request)
-        about_me = request.POST['about_me']
-        phone = request.POST['phone']
-        photo = request.FILES['photo']
-        print(photo)
-        user.about_me = about_me
-        user.phone = phone
-        user.photo = photo
-        user.is_admin = True
-        user.is_staff = True
-        user.is_superuser = True
-        user.save()
-        messages.success(request, 'You have signed up successfully, pls login')
-        return redirect('login')
+        if isinstance(user, User):
+            about_me = request.POST['about_me']
+            phone = request.POST['phone']
+            photo = request.FILES['photo']
+            user.about_me = about_me
+            user.phone = phone
+            user.photo = photo
+            user.is_admin = True
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+            messages.success(request, 'You have signed up successfully, pls login')
+            return redirect('login')
+        else:
+            messages.error(request, user)
+            return redirect('register')
     form = SignUpAdminForm()
     context = {'form': form}
     return render(request, 'users/register.html', context)

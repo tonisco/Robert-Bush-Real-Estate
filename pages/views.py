@@ -41,7 +41,6 @@ def agent(request, agent_id):
     agent_listing = Listing.objects.filter(realtor_id=agent_id).order_by('-list_date')
     paginator = Paginator(agent_listing, 6)
     page_num = request.GET.get('page')
-    print(agent)
     try:
         page_obj = paginator.get_page(page_num)
     except PageNotAnInteger:

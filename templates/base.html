@@ -10,7 +10,9 @@
     <title>R.B Real Estate {% block title %}{% endblock %}</title>
 </head>
 <body>
+{% include 'partials/_toast.html' %}
 {% include 'partials/_header.html' %}
+
 <div class="jump"></div>
 {% block content %} {% endblock content %}
 {% include 'partials/_footer.html' %}

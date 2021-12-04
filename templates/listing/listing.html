@@ -8,11 +8,6 @@
         <h1>{{ listing.title }}</h1>
         <p><i class="fa fa-map-marker-alt"> {{ listing.address }}, {{ listing.city }}, {{ listing.state }}</i></p>
     </section>
-    {% if messages %}
-        <div class="container">
-            {% for message in messages %}{% bootstrap_messages message %}{% endfor %}
-        </div>
-    {% endif %}
     <nav class="container my-4">
         <ol class="breadcrumb bg-dark bg-opacity-25 py-1 px-2">
             <li class="breadcrumb-item color-orange">

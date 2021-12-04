@@ -476,9 +476,20 @@
     object-fit: cover;
 }
 
-.agent>div{
+.agent > div {
     max-width: 400px;
     display: flex;
     flex-direction: column;
-
 }
+
+.position {
+    position: absolute;
+    top: 65px;
+    right: 3vw;
+    max-width: 80%;
+}
+
+.position>div>div{
+    max-width: max-content;
+}
+
