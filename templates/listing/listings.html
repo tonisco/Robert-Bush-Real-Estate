@@ -4,10 +4,11 @@
 {% block title %}| listings{% endblock title %}
 {% block content %}
     <section class="hero py-4 px-2 hero-form d-flex flex-column align-items-center gap-3">
-        <h1>Browse Our Properties</h1>
+        {% if searched %}<h1>Search Results</h1>{% else %}<h1>Browse Our Properties</h1>{% endif %}
         <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
         <h5 class="underline">Find Your Home</h5>
-        <form class="flex-wrap gap-2 gap-sm-3" method="post">
+        <form class="flex-wrap gap-2 gap-sm-3" method="post" action="{% url 'search' %}">
+            {% csrf_token %}
             {% bootstrap_form form layout='inline' %}
             <button type="submit" class="btn background-orange text-white">Submit</button>
         </form>

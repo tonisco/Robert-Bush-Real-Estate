@@ -46,6 +46,9 @@ class SearchForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.listings = kwargs.pop('listing')
         self.states = [('', 'State')]
+        self.searches = {}
+        if 'searches' in kwargs:
+            self.searches = kwargs.pop('searches')
         super(SearchForm, self).__init__(*args, **kwargs)
         if self.listings:
             for item in self.listings:
@@ -53,6 +56,18 @@ class SearchForm(forms.ModelForm):
                     self.states.append((item.state, item.state))
             self.states = tuple(sorted(self.states, key=lambda x: x[0]))
             self.fields['state'].widget.choices = self.states
+        if 'offer_type' in self.searches:
+            self.fields['offer_type'].initial = self.searches['offer_type']
+        if 'bedrooms' in self.searches:
+            self.fields['bedrooms'].initial = self.searches['bedrooms']
+        if 'baths' in self.searches:
+            self.fields['baths'].initial = self.searches['baths']
+        if 'price' in self.searches:
+            self.fields['price'].initial = self.searches['price']
+        if 'state' in self.searches:
+            self.fields['state'].initial = self.searches['state']
+        if 'sqft' in self.searches:
+            self.fields['sqft'].initial = self.searches['sqft']
 
     offer_type = forms.ChoiceField(choices=offer_choices, required=False)
     bedrooms = forms.ChoiceField(choices=bedroom_choices, required=False)
