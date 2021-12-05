@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 import os
 from django.contrib.auth import get_user_model
 from .form import LoginForm, SignUpForm, SignUpAdminForm, UserEditForm
-from .models import User as UserModel
 from django.contrib import messages, auth
 from contact.models import Contact
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from listing.models import Listing
 from listing.form import ListingForm
+from django.core.files.storage import default_storage
 
 User = get_user_model()
 
@@ -113,21 +113,16 @@ def settings(request):
     user = auth.get_user(request)
     if user.is_superuser and user.is_authenticated:
         if request.method == 'POST':
-            email = request.POST['email']
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            phone = request.POST['phone']
-            about_me = request.POST['about_me']
-            if 'photo' in request.FILES:
-                photo = request.FILES['photo']
-                print(user.photo)
-                os.remove(user.photo)
-                user = user(id=user.id, email=email, first_name=first_name, last_name=last_name, phone=phone,
-                            about_me=about_me, photo=photo)
-            else:
-                user = user(id=user.id, email=email, first_name=first_name, last_name=last_name, phone=phone,
-                            about_me=about_me)
+            user.email = request.POST['email']
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.phone = request.POST['phone']
+            user.about_me = request.POST['about_me']
+            if 'photo' in request.FILES and request.FILES != 0:
+                os.remove(user.photo.path)
+                user.photo = request.FILES['photo']
             user.save()
+            messages.success(request, 'Edits have been saved')
         form = UserEditForm(user=user)
         context = {'form': form}
         return render(request, 'users/settings.html', context)
@@ -156,11 +151,132 @@ def agent_listing(request):
         return redirect('index')
 
 
-def listing_edit(request):
+def listing_details(request, listing=None):
+    if not listing:
+        listing = Listing()
+    user = auth.get_user(request)
+    listing.realtor = user
+    listing.title = request.POST['title']
+    listing.address = request.POST['address']
+    listing.city = request.POST['city']
+    listing.state = request.POST['state']
+    listing.offer_type = request.POST['offer_type']
+    listing.zipcode = request.POST['zipcode']
+    listing.price = request.POST['price']
+    listing.bedrooms = request.POST['bedrooms']
+    listing.baths = request.POST['baths']
+    listing.sqft = request.POST['sqft']
+    listing.garage = request.POST['garage']
+    listing.pool = request.POST['pool']
+    listing.description = request.POST['description']
+    listing.list_date = request.POST['list_date']
+    listing.is_published = request.POST['is_published'] == 'on'
+    return listing
+
+
+def remove_image(image):
+    if image != '' and os.path.exists(image.path):
+        os.remove(image.path)
+
+
+def image_to_remove(request, listing):
+    if 'photo_main-clear' in request.POST:
+        remove_image(listing.photo_main)
+        listing.photo_main = ''
+    if 'photo_1-clear' in request.POST:
+        remove_image(listing.photo_1)
+        listing.photo_1 = ''
+    if 'photo_2-clear' in request.POST:
+        remove_image(listing.photo_2)
+        listing.photo_2 = ''
+    if 'photo_3-clear' in request.POST:
+        remove_image(listing.photo_3)
+        listing.photo_3 = ''
+    if 'photo_4-clear' in request.POST:
+        remove_image(listing.photo_4)
+        listing.photo_4 = ''
+    if 'photo_5-clear' in request.POST:
+        remove_image(listing.photo_5)
+        listing.photo_5 = ''
+
+    return listing
+
+
+def listing_images(request, listing):
+    if 'photo_main' in request.FILES:
+        remove_image(listing.photo_main)
+        listing.photo_main = request.FILES['photo_main']
+    if 'photo_1' in request.FILES:
+        remove_image(listing.photo_1)
+        listing.photo_1 = request.FILES['photo_1']
+    if 'photo_2' in request.FILES:
+        remove_image(listing.photo_2)
+        listing.photo_2 = request.FILES['photo_2']
+    if 'photo_3' in request.FILES:
+        remove_image(listing.photo_3)
+        listing.photo_3 = request.FILES['photo_3']
+    if 'photo_4' in request.FILES:
+        remove_image(listing.photo_4)
+        listing.photo_4 = request.FILES['photo_4']
+    if 'photo_5' in request.FILES:
+        remove_image(listing.photo_5)
+        listing.photo_5 = request.FILES['photo_5']
+    return listing
+
+
+def listing_edit(request, listing_id):
     user = auth.get_user(request)
     if user.is_superuser and user.is_authenticated:
+        listing = Listing.objects.get(id=listing_id)
+        if user != listing.realtor:
+            return redirect('agent_listing')
+        if request.method == 'POST':
+            listing = listing_details(request, listing)
+            listing = image_to_remove(request, listing)
+            if request.FILES != 0:
+                listing = listing_images(request, listing)
+            listing.save()
+            messages.success(request, 'Listing has been saved')
+            return redirect('agent_listing')
+
+        form = ListingForm(request=request, listing=listing)
+        context = {'form': form, 'listing': listing}
+        return render(request, 'users/listing_edit.html', context)
+    else:
+        return redirect('index')
+
+
+def listing_create(request):
+    user = auth.get_user(request)
+    if user.is_superuser and user.is_authenticated:
+        if request.method == 'POST':
+            listing = listing_details(request)
+            if request.FILES != 0:
+                listing = listing_images(request, listing)
+            listing.save()
+            messages.success(request, 'Listing has been saved')
+            return redirect('agent_listing')
+
         form = ListingForm(request=request)
         context = {'form': form}
         return render(request, 'users/listing_edit.html', context)
     else:
         return redirect('index')
+
+
+def listing_delete(request, listing_id):
+    user = auth.get_user(request)
+    if user.is_superuser and user.is_authenticated:
+        listing = Listing.objects.get(id=listing_id)
+        remove_image(listing.photo_main)
+        remove_image(listing.photo_1)
+        remove_image(listing.photo_2)
+        remove_image(listing.photo_3)
+        remove_image(listing.photo_4)
+        remove_image(listing.photo_5)
+
+        listing.delete()
+        messages.success(request, 'Listing successfully deleted')
+        return redirect('agent_listing')
+    else:
+        redirect('index')

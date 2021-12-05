@@ -26,7 +26,7 @@ def change_image_name(instance, filename):
 # Create your models here.
 class Listing(models.Model):
     realtor = models.ForeignKey(user, models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, verbose_name='title')
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

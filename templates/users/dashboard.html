@@ -44,7 +44,11 @@
                 {% endfor %}
                 </tbody>
             </table>
-        {% else %}<h5> Pls make an inquiry on a listing</h5>
+        {% else %}
+            <h5> No inquiries on your listing yet</h5>
+            {% if user.is_admin %}{% else %}
+                <h5> Pls make an inquiry on a listing</h5>
+            {% endif %}
         {% endif %}
     </main>
 {% endblock content %}
