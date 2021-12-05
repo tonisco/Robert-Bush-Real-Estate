@@ -6,9 +6,16 @@
             {% csrf_token %}
             <h1>Edit Details</h1>
             {% bootstrap_form form %}
+            {% if listing %}
+                <div class="d-flex w-100 justify-content-between">
+                    <a href="{% url 'listing_delete' listing.id %}" class="btn btn-danger align-self-end mt-3">Delete
+                        Listing</a>
+                    <button type="submit" class="btn link-button align-self-end mt-3">Save Listing</button>
+                </div>{% else %}
+                <button type="submit" class="btn link-button align-self-end mt-3">Save Listing</button>
 
-            {% if listing %}<a href="{% url 'listing_delete' listing.id %}" class="btn link-button align-self-end mt-3">Delete Listing</a>{% endif %}
-            <button type="submit" class="btn link-button align-self-end mt-3">Save Listing</button>
+            {% endif %}
+
         </form>
     </main>
 {% endblock %}

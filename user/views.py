@@ -25,7 +25,7 @@ def login(request):
             messages.success(request, 'You have successfully logged in')
             return redirect('dashboard')
         else:
-            messages.error(request, 'wrong email or password')
+            messages.error(request, 'Wrong email or password')
             return redirect('login')
     return render(request, 'users/login.html', context)
 

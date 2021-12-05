@@ -22,16 +22,20 @@
                 <div class="offcanvas-body padding-bottom-nav">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4">
                         <li class="nav-item fw-bold">
-                            <a class="nav-link active color-gray" href="{% url 'index' %}">HOME</a>
+                            <a class="nav-link active {% if '/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                               href="{% url 'index' %}">HOME</a>
                         </li>
                         <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="{% url 'all_listings' %}">LISTINGS</a>
+                            <a class="nav-link {% if '/listing/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                               href="{% url 'all_listings' %}">LISTINGS</a>
                         </li>
                         <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="{% url 'agents' %}">AGENTS</a>
+                            <a class="nav-link {% if '/agents' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                               href="{% url 'agents' %}">AGENTS</a>
                         </li>
                         <li class="nav-item fw-bold">
-                            <a class="nav-link color-gray" href="{% url 'about' %}">ABOUT</a>
+                            <a class="nav-link {% if '/about' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                               href="{% url 'about' %}">ABOUT</a>
                         </li>
 
                     </ul>
@@ -46,18 +50,24 @@
                                     Hi, {{ user.last_name }}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                                    <li>
+                                        <a class="dropdown-item {% if '/user/dashboard/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                                           href="{% url 'dashboard' %}">Dashboard</a></li>
                                     {% if user.is_admin %}
-                                        <li><a class="dropdown-item" href="{% url 'agent_listing' %}">My Listings</a>
+                                        <li>
+                                            <a class="dropdown-item {% if '/user/listing/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                                               href="{% url 'agent_listing' %}">My Listings</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+                                        <li>
+                                            <a class="dropdown-item {% if '/user/settings/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                                               href="{% url 'settings' %}">Settings</a></li>
                                     {% endif %}
                                 </ul>
                             </li>
 
                             <li class="nav-item fw-bold">
                                 <a class="nav-link color-gray" href="{% url 'logout' %}"><i
-                                        class="fa fa-sign-out-alt"></i> SIGNOUT</a>
+                                        class="fa fa-sign-out-alt"></i>SIGNOUT</a>
                             </li>
 
                         </ul>
@@ -66,11 +76,13 @@
                     <div class="offcanvas-body padding-top-nav">
                         <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
                             <li class="nav-item fw-bold">
-                                <a class="nav-link color-gray" href="{% url 'login' %}"><i
+                                <a class="nav-link {% if '/user/login/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                                   href="{% url 'login' %}"><i
                                         class="fa fa-sign-in-alt"></i> LOGIN </a>
                             </li>
                             <li class="nav-item fw-bold">
-                                <a class="nav-link color-gray" href="{% url 'register' %}"><i
+                                <a class="nav-link {% if '/user/register/' == request.path %} color-orange {% else %}color-gray {% endif %}"
+                                   href="{% url 'register' %}"><i
                                         class="fa fa-user-alt"></i> REGISTER</a>
                             </li>
 
@@ -82,18 +94,3 @@
         </div>
     </div>
 </nav>
-
-{#                    <li class="nav-item dropdown">#}
-{#                        <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button"#}
-{#                           data-bs-toggle="dropdown" >#}
-{#                            Dropdown#}
-{#                        </a>#}
-{#                        <ul class="dropdown-menu" >#}
-{#                            <li><a class="dropdown-item" href="#">Action</a></li>#}
-{#                            <li><a class="dropdown-item" href="#">Another action</a></li>#}
-{#                            <li>#}
-{#                                <hr class="dropdown-divider">#}
-{#                            </li>#}
-{#                            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-{#                        </ul>#}
-{#                    </li>#}

@@ -505,3 +505,7 @@
     margin: 20px auto;
 }
 
+.bg-error{
+    background-color: #dc3545 !important;
+}
+

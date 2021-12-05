@@ -3,17 +3,23 @@
         <div class="position-relative">
             <div class="toast-container position-absolute top-0 end-0 p-3">
                 {% for message in messages %}
-                    <div class="toast w-auto show align-items-center text-white {% if message.tag == error %}bg-danger {% else %}bg-{{ message.tags }}{% endif %} border-0" role="alert">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ message }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                    aria-label="Close"></button>
-                        </div>
+                    {% if message.tags == error %}
+                        <div class="toast w-auto show align-items-center text-white bg-warning red border-0"
+                             role="alert">
+                    {% else %}
+                        <div class="toast w-auto show align-items-center text-white bg-{{ message.tags }} border-0"
+                             role="alert">
+                    {% endif %}
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
                     </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                </div>
+                </div>
                 {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 {% endif %}

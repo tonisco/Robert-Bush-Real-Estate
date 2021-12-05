@@ -7,7 +7,8 @@
             <p class="fw-bold">Customer satisfaction is our goal</p>
             <button type="button" class="btn background-orange text-white">View Listing</button>
             <h3 class="my-3 underline">Find your home</h3>
-            <form class="flex-wrap gap-2 gap-sm-3" method="post">
+            <form class="flex-wrap gap-2 gap-sm-3" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
                 {% bootstrap_form form layout='inline' %}
                 <button type="submit" class="btn background-orange text-white">Submit</button>
             </form>
@@ -67,7 +68,7 @@
                             </div>
                             <a href="{% url 'listing' listing.id %}" class="btn link-button">More Info</a>
                         </div>
-                    <p class="offer">For {{ listing.offer_type }}</p>
+                        <p class="offer">For {{ listing.offer_type }}</p>
                     </div>
                 {% endfor %}
             </div>
