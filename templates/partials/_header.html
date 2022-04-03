@@ -20,7 +20,7 @@
             </div>
             <div class="d-md-flex justify-content-between nav-width">
                 <div class="offcanvas-body padding-bottom-nav">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 pb-2">
                         <li class="nav-item fw-bold">
                             <a class="nav-link active {% if '/' == request.path %} color-orange {% else %}color-gray {% endif %}"
                                href="{% url 'index' %}">HOME</a>
@@ -42,7 +42,7 @@
                 </div>
                 {% if user.is_authenticated %}
                     <div class="offcanvas-body padding-top-nav">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-sm-4">
                             <li class="dropdown nav-item fw-bold">
                                 <a class="dropdown-toggle nav-link color-gray text-uppercase text-truncate"
                                    type="button" id="dropdownMenuButton1"
@@ -74,7 +74,7 @@
                     </div>
                 {% else %}
                     <div class="offcanvas-body padding-top-nav">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-4">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-sm-4">
                             <li class="nav-item fw-bold">
                                 <a class="nav-link {% if '/user/login/' == request.path %} color-orange {% else %}color-gray {% endif %}"
                                    href="{% url 'login' %}"><i
