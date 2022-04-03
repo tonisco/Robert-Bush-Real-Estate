@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'cloudinary_storage',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
