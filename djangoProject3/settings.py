@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['robert-bush.herokuapp.com', 'localhost:8000']
+ALLOWED_HOSTS = ['robert-bush.herokuapp.com', 'localhost:8000', '127.0.0.1']
 
 # Application definition
 
@@ -51,7 +51,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,15 +84,39 @@ WSGI_APPLICATION = 'djangoProject3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+CLOUD_DATABASE = {
+    'NAME': env('PROD_NAME'),
+    'USER': env('PROD_USER'),
+    'PASSWORD': env('PROD_PASSWORD'),
+    'HOST': env('PROD_HOST'),
+    'PORT': env('PROD_PORT'),
+    'DATABASE_URL': env('PROD_DATABASE_URL')
+}
+LOCAL_DATABASE = {
+    'NAME': env('NAME'),
+    'USER': env('USER'),
+    'PASSWORD': env('PASSWORD'),
+    'HOST': env('HOST')
+}
+
+CURRENT_DATABASE = LOCAL_DATABASE if env('ENV') == 'development' else CLOUD_DATABASE
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('NAME'),
-        'USER': env('USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST')
     }
 }
+
+DATABASES['default'].update(CURRENT_DATABASE)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('API_KEY'),
+    'API_SECRET': env('API_SECRET'),
+    'SECURE': True
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

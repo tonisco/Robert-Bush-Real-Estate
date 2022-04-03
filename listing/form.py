@@ -40,6 +40,7 @@ class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = '__all__'
+        exclude = ['list_date']
 
 
 class SearchForm(forms.ModelForm):
